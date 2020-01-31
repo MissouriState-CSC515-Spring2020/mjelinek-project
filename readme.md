@@ -1,3 +1,5 @@
 # Repository for class project
 
-This readme is a placeholder that should be replaced
+"npm run build" builds the application to public/bundle.min.js
+
+"npm start" launches a server, using serve. Navigate to localhost:5000.
