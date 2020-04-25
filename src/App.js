@@ -1,11 +1,12 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Gallery from "./components/gallery";
-import Recents from "./components/recents";
-import Details from "./components/details";
 import {Nav} from "react-bootstrap";
+
+const Details = lazy(() => import('./components/details'));
+const Recents = lazy(() => import('./components/recents'));
 
 export default function App() {
   return (
@@ -34,18 +35,20 @@ export default function App() {
 
 
       </Nav>
-
-      <Switch>
-        <Route exact path="/">
-          <Gallery />
-        </Route>
-        <Route path="/recents">
-          <Recents />
-        </Route>
-        <Route path="/details">
-          <Details />
-        </Route>
-      </Switch>
+	  
+	  <Suspense fallback={<div>Loading...</div>}>
+		<Switch>
+			<Route exact path="/">
+			<Gallery />
+			</Route>
+			<Route path="/recents" component={Recents}>
+			<Recents />
+			</Route>
+			<Route path="/details" component={Details}>
+			<Details />
+			</Route>
+		</Switch>
+	  </Suspense>
     </Router>
   );
 }
